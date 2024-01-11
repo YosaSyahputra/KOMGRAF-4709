@@ -49,18 +49,22 @@ void scale(float points[3][1], float scaleX, float scaleY) {
 
 int main() {
     float points[3][1] = {
+        {1},
         {3},
-        {6},
         {1}
     };
 
+    // Menampilkan koordinat sebelum rotasi
     std::cout << "Koordinat awal: (" << points[0][0] << ", " << points[1][0] << ")\n";
 
+    // Faktor scaling
     float scaleX = 2.0f;
     float scaleY = 3.0f;
 
+    // Melakukan scaling
     scale(points, scaleX, scaleY);
 
+    // Menampilkan koordinat setelah rotasi
     std::cout << "Koordinat setelah scaling: (" << points[0][0] << ", " << points[1][0] << ")\n";
 
     return 0;

@@ -52,19 +52,23 @@ void rotate(float points[3][1], float angle, float pivotX, float pivotY) {
 
 int main() {
     float points[3][1] = {
+        {1},
         {3},
-        {6},
         {1}
     };
 
+    // Menampilkan koordinat sebelum rotasi
     std::cout << "Koordinat awal: (" << points[0][0] << ", " << points[1][0] << ")\n";
 
+    // Parameter Rotasi
     float angle = 45.0f;
     float pivotX = 3.0f;
     float pivotY = 3.0f;
 
+    //Melakukan Rotasi
     rotate(points, angle, pivotX, pivotY);
 
+    // Menampilkan koordinat setelah rotasi
     std::cout << "Koordinat setelah rotasi: (" << points[0][0] << ", " << points[1][0] << ")\n";
 
     return 0;

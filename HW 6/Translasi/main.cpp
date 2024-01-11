@@ -49,18 +49,22 @@ void translate(float points[3][1], float tx, float ty) {
 
 int main() {
     float points[3][1] = {
+        {1},
         {3},
-        {6},
         {1}
     };
 
+    // Menampilkan koordinat sebelum rotasi
     std::cout << "Koordinat awal: (" << points[0][0] << ", " << points[1][0] << ")\n";
 
+    // Faktor translasi
     float tx = 3.0f;
     float ty = 3.0f;
 
+    // Melakukan translasi
     translate(points, tx, ty);
 
+    // Menampilkan koordinat setelah rotasi
     std::cout << "Koordinat setelah translasi: (" << points[0][0] << ", " << points[1][0] << ")\n";
 
     return 0;

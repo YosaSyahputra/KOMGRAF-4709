@@ -19,8 +19,8 @@ std::array<int, 3> reflectOverMatrix(std::array<int, 3>& point, std::array<std::
 
 int main() {
     // Titik awal P1 dan P2
-    std::array<int, 3> P1 = {1, 3, 1}; // Koordinat homogen, dengan w=1
-    std::array<int, 3> P2 = {6, 5, 1}; // Titik akhir dimodifikasi
+    std::array<int, 3> P1 = {1, 3, 0}; // Koordinat homogen, dengan w=1
+    std::array<int, 3> P2 = {9, 9, 1}; // Titik akhir dimodifikasi
 
     // Refleksi titik awal P1 terhadap sumbu tegak lurus bidang XY
     std::array<int, 3> reflected_P1 = reflectOverMatrix(P1, reflectionMatrix);

@@ -26,7 +26,7 @@ std::pair<int, int> reflectOverMatrix(std::pair<int, int> point, std::array<std:
 int main() {
     // Titik awal P1 dan P2
     std::pair<int, int> P1 = std::make_pair(1, 3);
-    std::pair<int, int> P2 = std::make_pair(6, 5); // Titik akhir dimodifikasi
+    std::pair<int, int> P2 = std::make_pair(0, 9); // Titik akhir dimodifikasi
 
     // Refleksi titik awal P1 terhadap sumbu X menggunakan matriks 3x3
     std::pair<int, int> reflected_P1 = reflectOverMatrix(P1, reflectionMatrix);
