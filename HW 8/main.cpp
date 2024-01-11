@@ -1,86 +1,121 @@
 #include <iostream>
+
 using namespace std;
 
-// Fungsi untuk menentukan kode Cohen-Sutherland untuk suatu titik
-int computeCode(int x, int y, int xmin, int ymin, int xmax, int ymax) {
-    int code = 0;
+int main()
+{
+    int x1, y1, x2, y2;
+    int xmax, ymax, xmin, ymin;
 
-    if (x < xmin)
-        code |= 1; // Kode untuk batas kiri
-    else if (x > xmax)
-        code |= 2; // Kode untuk batas kanan
+    cout << "Masukkan koordinat titik awal (x1, y1): ";
+    cin >> x1 >> y1;
+    cout << "Masukkan koordinat titik akhir (x2, y2): ";
+    cin >> x2 >> y2;
+    cout << "Masukkan koordinat titik sudut kiri atas (xmin, ymin): ";
+    cin >> xmin >> ymin;
+    cout << "Masukkan koordinat titik sudut kanan bawah (xmax, ymax): ";
+    cin >> xmax >> ymax;
 
-    if (y < ymin)
-        code |= 4; // Kode untuk batas bawah
-    else if (y > ymax)
-        code |= 8; // Kode untuk batas atas
+    // Menentukan apakah titik awal dan titik akhir berada di dalam atau di luar
+    bool titik1DiDalam = true;
+    bool titik2DiDalam = true;
 
-    return code;
-}
+    // Memeriksa titik awal
+    if (x1 < xmin || x1 > xmax || y1 < ymin || y1 > ymax)
+    {
+        titik1DiDalam = false;
+    }
 
-// Fungsi untuk mengimplementasikan algoritma Cohen-Sutherland
-void cohenSutherlandClip(int x1, int y1, int x2, int y2, int xmin, int ymin, int xmax, int ymax) {
-    // Menghitung kode untuk kedua titik
-    int code1 = computeCode(x1, y1, xmin, ymin, xmax, ymax);
-    int code2 = computeCode(x2, y2, xmin, ymin, xmax, ymax);
+    // Memeriksa titik akhir
+    if (x2 < xmin || x2 > xmax || y2 < ymin || y2 > ymax)
+    {
+        titik2DiDalam = false;
+    }
 
-    bool accept = false;
-
-    while (true) {
-        // Cek apakah kedua titik berada dalam viewport (kode AND dari keduanya adalah 0)
-        if (!(code1 | code2)) {
-            accept = true;
-            break;
+    // Menentukan region code
+    int regionCode = 0;
+    if (titik1DiDalam && titik2DiDalam)
+    {
+        regionCode = 1;
+    }
+    else if (!titik1DiDalam && !titik2DiDalam)
+    {
+        regionCode = 2;
+    }
+    else
+    {
+        if (x1 < xmin && x2 < xmin)
+        {
+            regionCode = 3;
         }
-        // Cek apakah terdapat titik potong
-        else if (code1 & code2) {
-            break;
-        } else {
-            // Pilih salah satu titik yang berada di luar viewport
-            int x = 0, y = 0;
-            int code_out = code1 ? code1 : code2;
-
-            // Temukan titik potong dengan batas viewport
-            if (code_out & 1) {      // Batas kiri
-                x = xmin;
-                y = y1 + (y2 - y1) * (xmin - x1) / (x2 - x1);
-            } else if (code_out & 2) { // Batas kanan
-                x = xmax;
-                y = y1 + (y2 - y1) * (xmax - x1) / (x2 - x1);
-            } else if (code_out & 4) { // Batas bawah
-                y = ymin;
-                x = x1 + (x2 - x1) * (ymin - y1) / (y2 - y1);
-            } else if (code_out & 8) { // Batas atas
-                y = ymax;
-                x = x1 + (x2 - x1) * (ymax - y1) / (y2 - y1);
-            }
-
-            // Ganti titik yang berada di luar viewport dengan titik potong
-            if (code_out == code1) {
-                x1 = x;
-                y1 = y;
-                code1 = computeCode(x1, y1, xmin, ymin, xmax, ymax);
-            } else {
-                x2 = x;
-                y2 = y;
-                code2 = computeCode(x2, y2, xmin, ymin, xmax, ymax);
-            }
+        else if (x1 > xmax && x2 > xmax)
+        {
+            regionCode = 4;
+        }
+        else if (y1 < ymin && y2 < ymin)
+        {
+            regionCode = 5;
+        }
+        else if (y1 > ymax && y2 > ymax)
+        {
+            regionCode = 6;
+        }
+        else
+        {
+            regionCode = 7;
+        }
+        if (x1 < xmin && y1 < ymin)
+        {
+            regionCode |= 1;
         }
     }
 
-    if (accept) {
-        cout << "Garis Diterima:\nBatas X1=" << x1 << "\nBatas Y1=" << y1 << "\nBatas X2=" << x2 << "\nBatas Y2=" << y2 << endl;
-    } else {
-        cout << "Garis Ditolak" << endl;
+    // Menampilkan hasil
+    switch (regionCode)
+    {
+    case 1:
+        cout << "Region code: 0000" << endl;
+        cout << "Terletak di dalam viewport." << endl;
+        break;
+    case 2:
+        cout << "Region code: 0001" << endl;
+        cout << "Terletak sebelah kiri viewport." << endl;
+        break;
+    case 3:
+        cout << "Region code: 0010" << endl;
+        cout << "Terletak di sebelah kanan viewport." << endl;
+        break;
+    case 4:
+        cout << "Region code: 0100" << endl;
+        cout << "Terletak di sebelah bawah viewport." << endl;
+
+        break;
+    case 5:
+        cout << "Region code: 0101" << endl;
+        cout << "Terletak di sebelah kiri bawah viewport." << endl;
+
+        break;
+    case 6:
+        cout << "Region code: 0110" << endl;
+        cout << "Terletak di sebelah kanan bawah viewport." << endl;
+
+        break;
+    case 7:
+        cout << "Region code: 1000" << endl;
+        cout << "Terletak di sebelah atas viewport." << endl;
+
+        break;
+    case 8:
+        cout << "Region code: 1001" << endl;
+        cout << "Terletak di sebelah kiri atas viewport." << endl;
+
+        break;
+    case 9:
+        cout << "Region code: 1010" << endl;
+        cout << "Terletak di sebelah kanan atas viewport." << endl;
+
+        break;
     }
-}
-
-int main() {
-    // Contoh pemanggilan fungsi cohenSutherlandClip
-    int x1 = -1, y1 = -2, x2 = 5, y2 = 6;
-    int xmin = 1, ymin = 1, xmax = 4, ymax = 5; // Batas viewport
-
-    cohenSutherlandClip(x1, y1, x2, y2, xmin, ymin, xmax, ymax);
 
     return 0;
 }
