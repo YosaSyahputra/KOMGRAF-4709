@@ -1,14 +1,17 @@
 #include <GL/glut.h>
 #include <cmath>
 
+// Deklarasi variabel global untuk koordinat titik A dan B
 int xa, ya, xb, yb;
 
+// Fungsi untuk menggambar satu piksel
 void drawPixel(int x, int y) {
     glBegin(GL_POINTS);
     glVertex2i(x, y);
     glEnd();
 }
 
+// Implementasi algoritma Bresenham untuk menggambar garis
 void bresenhamLine(int xa, int ya, int xb, int yb) {
     int dx = abs(xb - xa);
     int dy = abs(yb - ya);
@@ -41,6 +44,7 @@ void bresenhamLine(int xa, int ya, int xb, int yb) {
     }
 }
 
+// Fungsi untuk menampilkan hasil pada layar
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f(1.0, 1.0, 1.0); // Warna garis putih
@@ -48,11 +52,13 @@ void display() {
     glFlush();
 }
 
+// Inisialisasi pengaturan awal OpenGL
 void init() {
     glClearColor(0.0, 0.0, 0.0, 1.0); // Warna latar belakang hitam
     gluOrtho2D(0, 500, 0, 500);
 }
 
+// Fungsi utama
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
@@ -62,13 +68,12 @@ int main(int argc, char** argv) {
     init();
 
     // Masukkan koordinat titik A dan B di sini
-xa = 10;
-ya = 30;
-xb = 90;
-yb = 90;
-
+    xa = 10;
+    ya = 30;
+    xb = 90;
+    yb = 90;
 
     glutDisplayFunc(display);
     glutMainLoop();
     return 0;
-	}
+}

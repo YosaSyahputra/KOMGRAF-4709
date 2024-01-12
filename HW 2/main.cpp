@@ -7,6 +7,7 @@ std::vector<std::vector<int>> inputMatrix(int rows, int cols)
     std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
     std::cout << "Masukkan elemen-elemen matriks:" << std::endl;
 
+// Mengisi matriks dengan input dari pengguna
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
@@ -104,6 +105,8 @@ int main()
     std::cin >> choice;
 
     std::vector<std::vector<int>> result;
+
+// Melakukan operasi sesuai pilihan
     switch (choice)
     {
     case 1:
